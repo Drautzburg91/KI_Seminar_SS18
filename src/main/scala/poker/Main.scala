@@ -24,10 +24,9 @@ object PokerPrediction {
     val startTime = System.nanoTime()
 
     // Load and parse the data files (1 million in Training Data & 20 000 in Testdata)
-    //val trainingData = MLUtils.loadLibSVMFile(sc, "/Users/paul/Seminar_KI_SS18/data/poker.t")
-    //val testData     = MLUtils.loadLibSVMFile(sc, "/Users/paul/Seminar_KI_SS18/data/poker")
-    var trainingData = MLUtils.loadLibSVMFile(sc, "C:\\Workspace\\Seminar_KI_SS18\\data\\poker.t") //CHECK
-    val testData = MLUtils.loadLibSVMFile(sc, "C:\\Workspace\\Seminar_KI_SS18\\data\\poker")
+    val trainingData = MLUtils.loadLibSVMFile(sc, "/Users/paul/Seminar_KI_SS18/data/poker.t")
+    val testData     = MLUtils.loadLibSVMFile(sc, "/Users/paul/Seminar_KI_SS18/data/poker")
+
     trainingData.persist(StorageLevel.MEMORY_AND_DISK_SER)                                         //Use Disk Memory, if MainMemory is not enough
 
     val numLinesTraining = trainingData.count()
@@ -80,14 +79,12 @@ object PokerPrediction {
     println(">>Data Set Test Error (Delta 1 Tolerance)= " + testErrDataSetwithTol)
 
 
-    // Save model
-    model.save(sc, "C:\\SparkPokerPrediction\\models\\PokerPrediction_"+dateTime+".model")                       //CHECK
-    //model.save(sc, "/Users/paul/Desktop/SparkPokerPrediction/models/PokerPrediction_" + dateTime + ".model")
+    // Save model                 
+    model.save(sc, "/Users/paul/Desktop/SparkPokerPrediction/models/PokerPrediction_" + dateTime + ".model")
 
 
     //Log Information
-    val logFile = new PrintWriter(new File("C:\\SparkPokerPrediction\\PokerPrediction_" + dateTime + "Uhr.txt")) //CHECK
-    //val logFile = new PrintWriter(new File("/Users/paul/Desktop/SparkPokerPrediction/"+dateTime+"Uhr.txt" ))
+    val logFile = new PrintWriter(new File("/Users/paul/Desktop/SparkPokerPrediction/"+dateTime+"Uhr.txt" ))
 
     logFile.write("--------------------------------------------- \n")
     logFile.write("Poker Prediction - RandomForest Approach \n")
@@ -142,8 +139,7 @@ object TestLoadPokerPredictionLoadModel {
     val sc = new SparkContext(conf)
 
     //Load Model
-    val loadModel = RandomForestModel.load(sc, "/Users/paul/Desktop/SparkPokerPrediction/models" + ".model")
-    //val loadModel = RandomForestModel.load(sc, "C:\\SparkPokerPrediction\\models\\PokerPredictionModel_01_05_2018__00_10Uhr.model")  //CHECK
+    val loadModel = RandomForestModel.load(sc, "C:\\SparkPokerPrediction\\models\\PokerPredictionModel_01_05_2018__00_10Uhr.model")  //CHECK
 
   }
 }
